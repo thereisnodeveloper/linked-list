@@ -11,6 +11,10 @@ const testElement = document.createElement('div');
 function linkedList() {
   let head;
   let tail;
+  // ??? tradeoff between saving "tail" as a value vs. traversing every time:
+  // no need to traverse to find tail.
+  // ??? OPERATIONS affected: POP (you have to know where tail is ).
+
   let size = 0;
 
   function getTail() {
@@ -44,6 +48,8 @@ function linkedList() {
   }
 
   function traverse(stopCondition = {}, currentNode = head, currentIndex = 0) {
+    // TODO: calculate big O for time & space
+    // MAYBE: use loop instead
     let stopConditionMet = false;
     stopCondition.operand2 = currentIndex;
     console.log('stopCondition.operand1:', stopCondition.operand1);
@@ -56,7 +62,7 @@ function linkedList() {
 
     // BASE CASE
     if (stopConditionMet === true) return currentNode;
-    if (currentNode === tail) return currentNode; // ??? not sure if this comparison will work
+    if (currentNode === tail) return currentNode;
 
     // RECURSIVE CASE
     console.log('base condition NOT met, moving on');
@@ -80,10 +86,24 @@ function linkedList() {
     } catch (error) {
       console.error(error);
     }
-
   }
   function pop() {
-    // TODO removes the last element from the list
+    // TODO handle error if size === 0
+
+    try {
+      if (size <= 0) throw new Error('Cannot pop, size is 0');
+      const last = tail;
+      tail.value = null;
+      const secondToLast = traverse({ operand1: size - 2 }); // find 2nd to the last element
+      secondToLast.next = null;
+      // set new tail value
+      tail = secondToLast;
+      size -= 1;
+
+      return last;
+    } catch (error) {
+      console.error(error);
+    }
   }
   function contains(value) {
     // TODO returns true if the passed in value is in the list and otherwise returns false.
@@ -147,13 +167,14 @@ aList.append(2);
 aList.append(5);
 aList.prepend(7);
 aList.prepend(8);
+aList.pop();
 
-const arrayAList = [8, 7, 2, 5];
+const arrayAList = [8, 7, 2];
 
-const at = aList.at(3); // 7
+// const at = aList.at(3); // 7
 
 const [head, tail, size] = [aList.getHead(), aList.getTail(), aList.getSize()];
 console.log('head:', head);
 console.log('tail:', tail);
 console.log('size:', size);
-console.log('at:', at);
+// console.log('at:', at);
