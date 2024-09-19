@@ -51,9 +51,17 @@ function linkedList() {
   }
 
   function prepend(value) {
-    // TODO: implement
-  }
+    const headReference = head;
+    const newNodeReference = node(value, head); // check if just 'head' will work
 
+    // check if this is the 1st node
+    checkIfSizeIs1(newNodeReference);
+
+    // set new tail property
+    head = newNodeReference;
+    size++;
+    return newNodeReference;
+  }
   return {
     append,
     prepend,
@@ -71,8 +79,10 @@ function node(value = null, next = null) {
 const aList = linkedList();
 aList.append(2);
 aList.append(5);
+aList.prepend(7);
+aList.prepend(8);
 
-const [head, tail, size] = [aList.getHead(), aList.getTail(),aList.getSize(), ];
-console.log('head:', head)
-console.log('tail:', tail)
-console.log('size:', size)
+const [head, tail, size] = [aList.getHead(), aList.getTail(), aList.getSize()];
+console.log('head:', head);
+console.log('tail:', tail);
+console.log('size:', size);
