@@ -71,10 +71,7 @@ function linkedList() {
     let { condition1, condition2 } = conditionObject;
     let meetsCondition = false;
     switch (mode) {
-      case 'at': {
-        condition2 = currentIndex;
-        break;
-      }
+      case 'at':
       case 'pop': {
         condition2 = currentIndex;
 
