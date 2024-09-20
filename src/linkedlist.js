@@ -11,10 +11,6 @@ const testElement = document.createElement('div');
 export function linkedList() {
   let head;
   let tail;
-  // ??? tradeoff between saving "tail" as a value vs. traversing every time:
-  // no need to traverse to find tail.
-  // ??? OPERATIONS affected: POP (you have to know where tail is ).
-
   let size = 0;
 
   function getTail() {
@@ -44,7 +40,7 @@ export function linkedList() {
     mode = null,
     currentNode = head,
     currentIndex = 0,
-    resultString = ''
+    resultString = '',
   ) {
     // TODO: calculate big O for time & space
     // MAYBE: use loop instead
@@ -68,10 +64,9 @@ export function linkedList() {
     if (currentNode === tail) return currentNode;
 
     // RECURSIVE CASE
-    // console.log('base condition NOT met, moving on');
+
     resultString = resultString.concat(`( ${currentNode.value} )`, '->');
     currentNode = currentNode.next;
-    // console.log('currentNode:', currentNode);
 
     return traverse(conditionObject, mode, currentNode, currentIndex + 1, resultString);
   }
@@ -98,17 +93,12 @@ export function linkedList() {
       default:
     }
     meetsCondition = condition1 === condition2;
-    // console.log('meetsCondition:', meetsCondition);
 
     return meetsCondition;
-    // TODO: generalize condition evaluation
   }
 
   function at(targetIndex) {
     try {
-      // if (targetIndex + 1 > size) {
-      //   throw new Error('Invalid Index');
-      // }
       isIndexValid(targetIndex);
       const result = traverse({ condition1: targetIndex }, 'at');
       return result;
@@ -117,8 +107,6 @@ export function linkedList() {
     }
   }
   function pop() {
-    // TODO handle error if size === 0
-
     try {
       if (size <= 0) throw new Error('Cannot pop, size is 0');
       const last = { ...tail };
@@ -137,7 +125,7 @@ export function linkedList() {
   }
   function contains(value) {
     const currentNode = traverse({ condition1: value }, 'contains');
-    // console.log('currentNode:', currentNode)
+
     return currentNode.value === value;
   }
 
@@ -148,18 +136,14 @@ export function linkedList() {
 
   function toString() {
     return traverse({ condition1: size - 1 }, 'toString');
-    // TODO represents your LinkedList objects as strings, so you can print them
-    // and preview them in the console. The format should be: ( value ) -> ( value ) -> ( value ) -> null
   }
   function append(value) {
     const newNodeReference = node(value);
 
-    // check if this is the 1st node
     checkIfSizeIs1(newNodeReference);
-    // change current tail node's next
+
     getTail().next = newNodeReference;
 
-    // set new tail property
     tail = newNodeReference;
     size++;
 
@@ -167,12 +151,10 @@ export function linkedList() {
   }
 
   function prepend(value) {
-    const newNodeReference = node(value, head); // check if just 'head' will work
+    const newNodeReference = node(value, head);
 
-    // check if this is the 1st node
     checkIfSizeIs1(newNodeReference);
 
-    // set new tail property
     head = newNodeReference;
     size++;
     return newNodeReference;
@@ -221,14 +203,12 @@ export function linkedList() {
     } catch (error) {
       console.error(error);
     }
-    // TODO: that removes the node at the given index.
   }
 
   function isIndexValid(targetIndex) {
     if (targetIndex + 1 > size) {
       throw new Error('Invalid Index');
     }
-    // MAYBE:generalized error handling
   }
   return {
     append,
@@ -259,12 +239,10 @@ aList.prepend(10);
 aList.prepend(7);
 aList.prepend(8);
 
-const at = aList.at(4); // 7
-// const popped = aList.pop();
+const at = aList.at(4);
+
 const contains = aList.contains(8);
 const find = aList.find(1000);
-// const insertAt = aList.insertAt(50, 2);
-// const removeAt = aList.removeAt(4)
 
 const toString = aList.toString();
 // console.log('toString:', toString);
