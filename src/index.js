@@ -55,6 +55,8 @@ function linkedList() {
     console.log('stopCondition.operand1:', stopCondition.operand1);
     console.log('stopCondition.operand2:', stopCondition.operand2);
 
+    evalCondition({ stopCondition });
+
     if (stopCondition.operand1 === stopCondition.operand2) {
       stopConditionMet = true;
     }
@@ -71,7 +73,27 @@ function linkedList() {
     return traverse(stopCondition, currentNode, currentIndex + 1);
   }
 
-  function evalCondition(condition) {
+  function evalCondition(key, criterion, mode) {
+    // const [key, criterion] = { condition };
+
+    switch (mode) {
+      case 'at': {
+        console.log("targetIndex === currentindex")
+        break;
+      }
+      case 'pop': {
+        console.log("currentIndex === size -2")
+
+        break;
+      }
+      case 'contains': {
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+
     return condition;
     // TODO: generalize condition evaluation
   }
@@ -106,6 +128,7 @@ function linkedList() {
     }
   }
   function contains(value) {
+    traverse({ operand1: value });
     // TODO returns true if the passed in value is in the list and otherwise returns false.
   }
 
