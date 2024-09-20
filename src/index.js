@@ -34,14 +34,6 @@ function linkedList() {
     if (getSize() === 0) {
       head = newNodeReference;
       tail = newNodeReference;
-      return {
-        at,
-        pop,
-        contains,
-        find,
-        toString,
-      };
-
       return true;
     }
     return false;
@@ -68,29 +60,30 @@ function linkedList() {
         return currentIndex;
       }
       if (mode === 'toString') {
-        return resultString + " null";
+        return resultString + ' null';
       }
       return currentNode;
     }
     if (currentNode === tail) return currentNode;
 
     // RECURSIVE CASE
-    console.log('base condition NOT met, moving on');
+    // console.log('base condition NOT met, moving on');
     resultString = resultString.concat(`( ${currentNode.value} )`, '->');
     currentNode = currentNode.next;
-    console.log('currentNode:', currentNode);
-
+    // console.log('currentNode:', currentNode);
 
     return traverse(conditionObject, mode, currentNode, currentIndex + 1, resultString);
   }
 
   function evaluateCondition(conditionObject, mode, currentIndex, currentValue) {
+    //MAYBE: instead of using mode, assign "this" to static variable (which poiints to the caller function)
     let { condition1, condition2 } = conditionObject;
     let meetsCondition = false;
     switch (mode) {
       case 'at':
       case 'pop':
-      case 'toString': {
+      case 'toString':
+      case 'insertAt': {
         condition2 = currentIndex;
         break;
       }
@@ -181,6 +174,28 @@ function linkedList() {
     size++;
     return newNodeReference;
   }
+
+  function insertAt(value, index) {
+    if (index === 0) {
+      prepend(value);
+      return;
+    }
+    if (index === size - 1) {
+      append(value);
+      return;
+    }
+
+    const insertionPoint = traverse({ condition1: index }, 'insertAt');
+    const newNode = node(value, insertionPoint.next);
+    insertionPoint.next = newNode;
+    size += 1;
+    return newNode;
+  }
+
+  function removeAt(index) {
+    //TODO: that removes the node at the given index.
+  }
+
   return {
     append,
     prepend,
@@ -192,6 +207,7 @@ function linkedList() {
     contains,
     find,
     toString,
+    insertAt,
   };
 }
 
@@ -211,11 +227,10 @@ const arrayAList = [8, 7, 10, 2, 5, 4];
 
 const at = aList.at(4); // 7
 const popped = aList.pop();
-// console.log('popped:', popped);
 const contains = aList.contains(8);
-// console.log('contains:', contains);
 const find = aList.find(1000);
-// console.log('find:', find);
+const insertAt = aList.insertAt(50, 2);
+
 const toString = aList.toString();
 console.log('toString:', toString);
 
