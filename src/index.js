@@ -70,19 +70,13 @@ function linkedList() {
   function evaluateCondition(conditionObject, mode, currentIndex, currentValue) {
     let { condition1, condition2 } = conditionObject;
     let meetsCondition = false;
-    // console.log('condition1:', condition1);
-    // console.log('condition2:', condition2);
     switch (mode) {
       case 'at': {
         condition2 = currentIndex;
-
-        console.log('targetIndex === currentIndex');
         break;
       }
       case 'pop': {
         condition2 = currentIndex;
-        console.log(`condition 2 after assigned: ${condition2}`);
-        // console.log('size -2 === currentIndex');
 
         break;
       }
