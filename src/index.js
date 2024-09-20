@@ -58,7 +58,12 @@ function linkedList() {
     stopConditionMet = evaluateCondition(conditionObject, mode, currentIndex, currentValue);
 
     // BASE CASE
-    if (stopConditionMet === true) return currentNode;
+    if (stopConditionMet === true) {
+      if (mode === 'find') {
+        return currentIndex;
+      }
+      return currentNode;
+    }
     if (currentNode === tail) return currentNode;
 
     // RECURSIVE CASE
@@ -77,7 +82,8 @@ function linkedList() {
         condition2 = currentIndex;
         break;
       }
-      case 'contains': {
+      case 'contains':
+      case 'find': {
         condition2 = currentValue;
         break;
       }
@@ -128,7 +134,8 @@ function linkedList() {
   }
 
   function find(value) {
-    // TODO returns the index of the node containing value, or null if not found.
+    const index  = traverse({ condition1: value }, 'find');
+    return Number.isInteger( index) ? index : undefined //traverse will return currentNode (tail) if nothing is found. If found, it will return an index,
   }
 
   function toString() {
@@ -193,7 +200,9 @@ const at = aList.at(4); // 7
 const popped = aList.pop();
 // console.log('popped:', popped);
 const contains = aList.contains(8);
-console.log('contains:', contains);
+// console.log('contains:', contains);
+const find = aList.find(1000)
+console.log('find:', find)
 
 const [head, tail, size] = [aList.getHead(), aList.getTail(), aList.getSize()];
 console.log('head:', head);
