@@ -104,9 +104,10 @@ function linkedList() {
 
   function at(targetIndex) {
     try {
-      if (targetIndex + 1 > size) {
-        throw new Error('Invalid Index');
-      }
+      // if (targetIndex + 1 > size) {
+      //   throw new Error('Invalid Index');
+      // }
+      isIndexValid(targetIndex)
       const result = traverse({ condition1: targetIndex }, 'at');
       return result;
     } catch (error) {
@@ -194,8 +195,16 @@ function linkedList() {
 
   function removeAt(index) {
     //TODO: that removes the node at the given index.
+    
+    
   }
 
+  function isIndexValid(targetIndex ){
+    if (targetIndex + 1 > size) {
+      throw new Error('Invalid Index');
+    }
+    //MAYBE:generalized error handling
+  }
   return {
     append,
     prepend,
