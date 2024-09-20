@@ -47,13 +47,18 @@ function linkedList() {
     return false;
   }
 
-  function traverse(conditionObject, mode, currentNode = head, currentIndex = 0) {
+  function traverse(
+    conditionObject,
+    mode = null,
+    currentNode = head,
+    currentIndex = 0,
+    resultString = ''
+  ) {
     // TODO: calculate big O for time & space
     // MAYBE: use loop instead
 
     let stopConditionMet = false;
     const currentValue = currentNode.value;
-    console.log(`%c currentValue:${currentValue}`, 'color:red');
 
     stopConditionMet = evaluateCondition(conditionObject, mode, currentIndex, currentValue);
 
@@ -62,15 +67,21 @@ function linkedList() {
       if (mode === 'find') {
         return currentIndex;
       }
+      if (mode === 'toString') {
+        return resultString + " null";
+      }
       return currentNode;
     }
     if (currentNode === tail) return currentNode;
 
     // RECURSIVE CASE
     console.log('base condition NOT met, moving on');
+    resultString = resultString.concat(`( ${currentNode.value} )`, '->');
     currentNode = currentNode.next;
     console.log('currentNode:', currentNode);
-    return traverse(conditionObject, mode, currentNode, currentIndex + 1);
+
+
+    return traverse(conditionObject, mode, currentNode, currentIndex + 1, resultString);
   }
 
   function evaluateCondition(conditionObject, mode, currentIndex, currentValue) {
@@ -78,7 +89,8 @@ function linkedList() {
     let meetsCondition = false;
     switch (mode) {
       case 'at':
-      case 'pop': {
+      case 'pop':
+      case 'toString': {
         condition2 = currentIndex;
         break;
       }
@@ -134,11 +146,12 @@ function linkedList() {
   }
 
   function find(value) {
-    const index  = traverse({ condition1: value }, 'find');
-    return Number.isInteger( index) ? index : undefined //traverse will return currentNode (tail) if nothing is found. If found, it will return an index,
+    const index = traverse({ condition1: value }, 'find');
+    return Number.isInteger(index) ? index : undefined; // traverse will return currentNode (tail) if nothing is found. If found, it will return an index,
   }
 
   function toString() {
+    return traverse({ condition1: size - 1 }, 'toString');
     // TODO represents your LinkedList objects as strings, so you can print them
     // and preview them in the console. The format should be: ( value ) -> ( value ) -> ( value ) -> null
   }
@@ -201,8 +214,10 @@ const popped = aList.pop();
 // console.log('popped:', popped);
 const contains = aList.contains(8);
 // console.log('contains:', contains);
-const find = aList.find(1000)
-console.log('find:', find)
+const find = aList.find(1000);
+// console.log('find:', find);
+const toString = aList.toString();
+console.log('toString:', toString);
 
 const [head, tail, size] = [aList.getHead(), aList.getTail(), aList.getSize()];
 console.log('head:', head);
