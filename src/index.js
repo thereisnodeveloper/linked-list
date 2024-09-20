@@ -53,6 +53,7 @@ function linkedList() {
 
     let stopConditionMet = false;
     const currentValue = currentNode.value;
+    console.log(`%c currentValue:${currentValue}`, 'color:red');
 
     stopConditionMet = evaluateCondition(conditionObject, mode, currentIndex, currentValue);
 
@@ -74,10 +75,10 @@ function linkedList() {
       case 'at':
       case 'pop': {
         condition2 = currentIndex;
-
         break;
       }
       case 'contains': {
+        condition2 = currentValue;
         break;
       }
 
@@ -106,23 +107,24 @@ function linkedList() {
 
     try {
       if (size <= 0) throw new Error('Cannot pop, size is 0');
-      const last = {...tail}
-      
+      const last = { ...tail };
+
       tail.value = null;
       const secondToLast = traverse({ condition1: size - 2 }, 'pop'); // find 2nd to the last element
       secondToLast.next = null;
       // set new tail value
       tail = secondToLast;
       size -= 1;
-      
+
       return last;
     } catch (error) {
       console.error(error);
     }
   }
   function contains(value) {
-    traverse({ operand1: value });
-    // TODO returns true if the passed in value is in the list and otherwise returns false.
+    const currentNode = traverse({ condition1: value }, 'contains');
+    // console.log('currentNode:', currentNode)
+    return currentNode.value === value;
   }
 
   function find(value) {
@@ -189,10 +191,12 @@ const arrayAList = [8, 7, 10, 2, 5, 4];
 
 const at = aList.at(4); // 7
 const popped = aList.pop();
-console.log('popped:', popped);
+// console.log('popped:', popped);
+const contains = aList.contains(8);
+console.log('contains:', contains);
 
 const [head, tail, size] = [aList.getHead(), aList.getTail(), aList.getSize()];
 console.log('head:', head);
 console.log('tail:', tail);
 console.log('size:', size);
-console.log('at:', at);
+// console.log('at:', at);
