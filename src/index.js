@@ -60,7 +60,8 @@ function linkedList() {
         return currentIndex;
       }
       if (mode === 'toString') {
-        return resultString + ' null';
+        return resultString + `( ${currentNode.value} )` + ' null';
+        // return resultString  + ' null';
       }
       return currentNode;
     }
@@ -83,7 +84,8 @@ function linkedList() {
       case 'at':
       case 'pop':
       case 'toString':
-      case 'insertAt': {
+      case 'insertAt':
+      case 'removeAt': {
         condition2 = currentIndex;
         break;
       }
@@ -145,7 +147,7 @@ function linkedList() {
   }
 
   function toString() {
-    return traverse({ condition1: size - 1 }, 'toString');
+    return traverse({ condition1: size -1 }, 'toString');
     // TODO represents your LinkedList objects as strings, so you can print them
     // and preview them in the console. The format should be: ( value ) -> ( value ) -> ( value ) -> null
   }
@@ -195,11 +197,30 @@ function linkedList() {
       size += 1;
       return newNode;
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   }
 
   function removeAt(index) {
+    try {
+      isIndexValid(index);
+      if (index === 0) {
+        aList.pop;
+        return;
+      }
+
+      const nodeBeforeTarget = traverse({ condition1: index - 1 }, 'removeAt');
+      const removalTarget = { ...nodeBeforeTarget.next };
+      nodeBeforeTarget.next = nodeBeforeTarget.next.next;
+      if (index === size - 1) {
+        tail = nodeBeforeTarget;
+        console.log('NEW tail:', tail);
+      }
+      size -= 1;
+      return removalTarget;
+    } catch (error) {
+      console.error(error);
+    }
     //TODO: that removes the node at the given index.
   }
 
@@ -221,6 +242,7 @@ function linkedList() {
     find,
     toString,
     insertAt,
+    removeAt,
   };
 }
 
@@ -236,13 +258,13 @@ aList.append(4);
 aList.prepend(10);
 aList.prepend(7);
 aList.prepend(8);
-const arrayAList = [8, 7, 10, 2, 5, 4];
 
 const at = aList.at(4); // 7
-const popped = aList.pop();
+// const popped = aList.pop();
 const contains = aList.contains(8);
 const find = aList.find(1000);
-const insertAt = aList.insertAt(50, 2);
+// const insertAt = aList.insertAt(50, 2);
+// const removeAt = aList.removeAt(4)
 
 const toString = aList.toString();
 console.log('toString:', toString);
@@ -251,4 +273,3 @@ const [head, tail, size] = [aList.getHead(), aList.getTail(), aList.getSize()];
 console.log('head:', head);
 console.log('tail:', tail);
 console.log('size:', size);
-// console.log('at:', at);
