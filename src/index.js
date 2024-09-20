@@ -47,20 +47,14 @@ function linkedList() {
     return false;
   }
 
-  function traverse(stopCondition = {}, currentNode = head, currentIndex = 0) {
+  function traverse(conditionObject, mode, currentNode = head, currentIndex = 0) {
     // TODO: calculate big O for time & space
     // MAYBE: use loop instead
+
     let stopConditionMet = false;
-    stopCondition.operand2 = currentIndex;
-    console.log('stopCondition.operand1:', stopCondition.operand1);
-    console.log('stopCondition.operand2:', stopCondition.operand2);
+    const currentValue = currentNode.value;
 
-    evalCondition({ stopCondition });
-
-    if (stopCondition.operand1 === stopCondition.operand2) {
-      stopConditionMet = true;
-    }
-    console.log(stopConditionMet);
+    stopConditionMet = evaluateCondition(conditionObject, mode, currentIndex, currentValue);
 
     // BASE CASE
     if (stopConditionMet === true) return currentNode;
@@ -70,19 +64,24 @@ function linkedList() {
     console.log('base condition NOT met, moving on');
     currentNode = currentNode.next;
     console.log('currentNode:', currentNode);
-    return traverse(stopCondition, currentNode, currentIndex + 1);
+    return traverse(conditionObject, mode, currentNode, currentIndex + 1);
   }
 
-  function evalCondition(key, criterion, mode) {
-    // const [key, criterion] = { condition };
-
+  function evaluateCondition(conditionObject, mode, currentIndex, currentValue) {
+    let { condition1, condition2 } = conditionObject;
+    let meetsCondition = false;
+    console.log('condition1:', condition1);
+    console.log('condition2:', condition2);
     switch (mode) {
       case 'at': {
-        console.log("targetIndex === currentindex")
+        condition2 = currentIndex;
+        meetsCondition = condition1 === condition2;
+        console.log(condition1 === condition2);
+        console.log('targetIndex === currentIndex');
         break;
       }
       case 'pop': {
-        console.log("currentIndex === size -2")
+        console.log('size -2 === currentIndex');
 
         break;
       }
@@ -94,7 +93,7 @@ function linkedList() {
       }
     }
 
-    return condition;
+    return meetsCondition;
     // TODO: generalize condition evaluation
   }
 
@@ -103,7 +102,7 @@ function linkedList() {
       if (targetIndex + 1 > size) {
         throw new Error('Invalid Index');
       }
-      const result = traverse({ operand1: targetIndex });
+      const result = traverse({ condition1: targetIndex }, 'at');
       return result;
     } catch (error) {
       console.error(error);
@@ -188,16 +187,18 @@ function node(value = null, next = null) {
 const aList = linkedList();
 aList.append(2);
 aList.append(5);
+aList.append(4);
+aList.prepend(10);
 aList.prepend(7);
 aList.prepend(8);
-aList.pop();
+// aList.pop();
+// FIXME: uncomment pop() once ready
+const arrayAList = [8, 7, 10, 2, 5, 4];
 
-const arrayAList = [8, 7, 2];
-
-// const at = aList.at(3); // 7
+const at = aList.at(4); // 7
 
 const [head, tail, size] = [aList.getHead(), aList.getTail(), aList.getSize()];
 console.log('head:', head);
 console.log('tail:', tail);
 console.log('size:', size);
-// console.log('at:', at);
+console.log('at:', at);
