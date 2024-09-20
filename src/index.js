@@ -70,28 +70,30 @@ function linkedList() {
   function evaluateCondition(conditionObject, mode, currentIndex, currentValue) {
     let { condition1, condition2 } = conditionObject;
     let meetsCondition = false;
-    console.log('condition1:', condition1);
-    console.log('condition2:', condition2);
+    // console.log('condition1:', condition1);
+    // console.log('condition2:', condition2);
     switch (mode) {
       case 'at': {
         condition2 = currentIndex;
-        meetsCondition = condition1 === condition2;
-        console.log(condition1 === condition2);
+
         console.log('targetIndex === currentIndex');
         break;
       }
       case 'pop': {
-        console.log('size -2 === currentIndex');
+        condition2 = currentIndex;
+        console.log(`condition 2 after assigned: ${condition2}`);
+        // console.log('size -2 === currentIndex');
 
         break;
       }
       case 'contains': {
         break;
       }
-      default: {
-        break;
-      }
+
+      default:
     }
+    meetsCondition = condition1 === condition2;
+    console.log('meetsCondition:', meetsCondition);
 
     return meetsCondition;
     // TODO: generalize condition evaluation
@@ -113,14 +115,15 @@ function linkedList() {
 
     try {
       if (size <= 0) throw new Error('Cannot pop, size is 0');
-      const last = tail;
+      const last = {...tail}
+      
       tail.value = null;
-      const secondToLast = traverse({ operand1: size - 2 }); // find 2nd to the last element
+      const secondToLast = traverse({ condition1: size - 2 }, 'pop'); // find 2nd to the last element
       secondToLast.next = null;
       // set new tail value
       tail = secondToLast;
       size -= 1;
-
+      
       return last;
     } catch (error) {
       console.error(error);
@@ -191,11 +194,11 @@ aList.append(4);
 aList.prepend(10);
 aList.prepend(7);
 aList.prepend(8);
-// aList.pop();
-// FIXME: uncomment pop() once ready
 const arrayAList = [8, 7, 10, 2, 5, 4];
 
 const at = aList.at(4); // 7
+const popped = aList.pop();
+console.log('popped:', popped);
 
 const [head, tail, size] = [aList.getHead(), aList.getTail(), aList.getSize()];
 console.log('head:', head);
