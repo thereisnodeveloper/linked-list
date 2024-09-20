@@ -107,7 +107,7 @@ function linkedList() {
       // if (targetIndex + 1 > size) {
       //   throw new Error('Invalid Index');
       // }
-      isIndexValid(targetIndex)
+      isIndexValid(targetIndex);
       const result = traverse({ condition1: targetIndex }, 'at');
       return result;
     } catch (error) {
@@ -177,29 +177,33 @@ function linkedList() {
   }
 
   function insertAt(value, index) {
-    if (index === 0) {
-      prepend(value);
-      return;
-    }
-    if (index === size - 1) {
-      append(value);
-      return;
-    }
+    try {
+      isIndexValid(index);
 
-    const insertionPoint = traverse({ condition1: index }, 'insertAt');
-    const newNode = node(value, insertionPoint.next);
-    insertionPoint.next = newNode;
-    size += 1;
-    return newNode;
+      if (index === 0) {
+        prepend(value);
+        return;
+      }
+      if (index === size - 1) {
+        append(value);
+        return;
+      }
+
+      const insertionPoint = traverse({ condition1: index }, 'insertAt');
+      const newNode = node(value, insertionPoint.next);
+      insertionPoint.next = newNode;
+      size += 1;
+      return newNode;
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   function removeAt(index) {
     //TODO: that removes the node at the given index.
-    
-    
   }
 
-  function isIndexValid(targetIndex ){
+  function isIndexValid(targetIndex) {
     if (targetIndex + 1 > size) {
       throw new Error('Invalid Index');
     }
