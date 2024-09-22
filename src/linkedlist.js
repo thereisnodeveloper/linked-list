@@ -8,7 +8,7 @@ const testElement = document.createElement('div');
 
 // use Factory functions instead of clsasses
 
-export function linkedList() {
+export default function linkedList() {
   let head;
   let tail;
   let size = 0;

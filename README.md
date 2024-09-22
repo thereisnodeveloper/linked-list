@@ -1,1 +1,3 @@
-# webdev Template (webpack, airbnb, ESLint)
+# Linked List implementation in JavaScript
+ - Singly linked
+ - Uses recursion to traverse
