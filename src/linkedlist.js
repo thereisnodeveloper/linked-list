@@ -2,6 +2,7 @@
 import './reset.css';
 import './style.css';
 
+console.log('Linked List package loaded - test!');
 // eslint-disable-next-line no-unused-vars
 const testElement = document.createElement('div');
 // #endregion
