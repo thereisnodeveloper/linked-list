@@ -40,7 +40,7 @@ export function linkedList() {
     mode = null,
     currentNode = head,
     currentIndex = 0,
-    resultString = ''
+    resultString = '',
   ) {
     // TODO: calculate big O for time & space
     // MAYBE: use loop instead
@@ -210,6 +210,12 @@ export function linkedList() {
       throw new Error('Invalid Index');
     }
   }
+
+  // MAYBE: use undefined instead of null
+  function node(value = null, next = null) {
+    return { value, next };
+  }
+
   return {
     append,
     prepend,
@@ -223,31 +229,27 @@ export function linkedList() {
     toString,
     insertAt,
     removeAt,
+    node
   };
 }
 
-// MAYBE: use undefined instead of null
-function node(value = null, next = null) {
-  return { value, next };
-}
+// const aList = linkedList();
+// aList.append(2);
+// aList.append(5);
+// aList.append(4);
+// aList.prepend(10);
+// aList.prepend(7);
+// aList.prepend(8);
 
-const aList = linkedList();
-aList.append(2);
-aList.append(5);
-aList.append(4);
-aList.prepend(10);
-aList.prepend(7);
-aList.prepend(8);
+// const at = aList.at(4);
 
-const at = aList.at(4);
+// const contains = aList.contains(8);
+// const find = aList.find(1000);
 
-const contains = aList.contains(8);
-const find = aList.find(1000);
-
-const toString = aList.toString();
+// const toString = aList.toString();
 // console.log('toString:', toString);
 
-const [head, tail, size] = [aList.getHead(), aList.getTail(), aList.getSize()];
+// const [head, tail, size] = [aList.getHead(), aList.getTail(), aList.getSize()];
 // console.log('head:', head);
 // console.log('tail:', tail);
 // console.log('size:', size);
