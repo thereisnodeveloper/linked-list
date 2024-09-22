@@ -40,7 +40,7 @@ export function linkedList() {
     mode = null,
     currentNode = head,
     currentIndex = 0,
-    resultString = '',
+    resultString = ''
   ) {
     // TODO: calculate big O for time & space
     // MAYBE: use loop instead
