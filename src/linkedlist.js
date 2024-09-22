@@ -1,15 +1,19 @@
 // #region required-template
-import './reset.css';
-import './style.css';
+// import './reset.css';
+// import './style.css';
 
-console.log('Linked List package loaded - test!');
+console.log('Linked List package loaded - test!!!');
 // eslint-disable-next-line no-unused-vars
-const testElement = document.createElement('div');
+// const testElement = document.createElement('div');
 // #endregion
 
 // use Factory functions instead of clsasses
+export function testFunc() {
+  console.log('test function......');
+}
 
-export default function linkedList() {
+export function linkedList() {
+  // export default function linkedList() {
   let head;
   let tail;
   let size = 0;
@@ -230,7 +234,7 @@ export default function linkedList() {
     toString,
     insertAt,
     removeAt,
-    node
+    node,
   };
 }
 
