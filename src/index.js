@@ -5,12 +5,12 @@ console.log('Linked List package loaded - test!!!');
 // eslint-disable-next-line no-unused-vars
 
 // use Factory functions instead of clsasses
-function testFunc() {
+function testFunction() {
   console.log('this is just a test function......');
 }
 
 function linkedList() {
-  console.log('linkedList() called...')
+  console.log('linkedList() called...');
   // export default function linkedList() {
   let head;
   let tail;
@@ -43,7 +43,7 @@ function linkedList() {
     mode = null,
     currentNode = head,
     currentIndex = 0,
-    resultString = ''
+    resultString = '',
   ) {
     // TODO: calculate big O for time & space
     // MAYBE: use loop instead
@@ -100,27 +100,23 @@ function linkedList() {
     return meetsCondition;
   }
 
-  function at(targetIndex) {  
-      isIndexValid(targetIndex);
-      const result = traverse({ condition1: targetIndex }, 'at');
-      return result;
+  function at(targetIndex) {
+    isIndexValid(targetIndex);
+    const result = traverse({ condition1: targetIndex }, 'at');
+    return result;
   }
   function pop() {
-    try {
-      if (size <= 0) throw new Error('Cannot pop, size is 0');
-      const last = { ...tail };
+    if (size <= 0) throw new Error('Cannot pop, size is 0');
+    const last = { ...tail };
 
-      tail.value = null;
-      const secondToLast = traverse({ condition1: size - 2 }, 'pop'); // find 2nd to the last element
-      secondToLast.next = null;
-      // set new tail value
-      tail = secondToLast;
-      size -= 1;
+    tail.value = null;
+    const secondToLast = traverse({ condition1: size - 2 }, 'pop'); // find 2nd to the last element
+    secondToLast.next = null;
+    // set new tail value
+    tail = secondToLast;
+    size -= 1;
 
-      return last;
-    } catch (error) {
-      console.error(error);
-    }
+    return last;
   }
   function contains(value) {
     const currentNode = traverse({ condition1: value }, 'contains');
@@ -160,30 +156,25 @@ function linkedList() {
   }
 
   function insertAt(value, index) {
-    try {
-      isIndexValid(index);
+    isIndexValid(index);
 
-      if (index === 0) {
-        prepend(value);
-        return;
-      }
-      if (index === size - 1) {
-        append(value);
-        return;
-      }
-
-      const insertionPoint = traverse({ condition1: index }, 'insertAt');
-      const newNode = node(value, insertionPoint.next);
-      insertionPoint.next = newNode;
-      size += 1;
-      return newNode;
-    } catch (error) {
-      console.error(error);
+    if (index === 0) {
+      prepend(value);
+      return;
     }
+    if (index === size - 1) {
+      append(value);
+      return;
+    }
+
+    const insertionPoint = traverse({ condition1: index }, 'insertAt');
+    const newNode = node(value, insertionPoint.next);
+    insertionPoint.next = newNode;
+    size += 1;
+    return newNode;
   }
 
   function removeAt(index) {
-    try {
       isIndexValid(index);
       if (index === 0) {
         aList.pop;
@@ -199,9 +190,6 @@ function linkedList() {
       }
       size -= 1;
       return removalTarget;
-    } catch (error) {
-      console.error(error);
-    }
   }
 
   function isIndexValid(targetIndex) {
@@ -253,4 +241,4 @@ function linkedList() {
 // console.log('tail:', tail);
 // console.log('size:', size);
 
-export { testFunc, linkedList };
+export { testFunction as testFunc, linkedList };
