@@ -15,10 +15,15 @@ export default {
     main: './src/index.js',
   },
   output: {
-    library: 'LinkedListLibrary'
-    // filename: 'main.js',
-    // path: path.resolve(__dirname, 'dist'),
-    // clean: true,
+    filename: 'main.js',
+    path: path.resolve(__dirname, 'dist'),
+    clean: true,
+    globalObject: 'this',
+    library: { name: 'LinkedListLibrary',
+      type: 'umd',
+      
+     },
+
   },
   module: {
     rules: [
