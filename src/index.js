@@ -99,14 +99,10 @@ function linkedList() {
     return meetsCondition;
   }
 
-  function at(targetIndex) {
-    try {
+  function at(targetIndex) {  
       isIndexValid(targetIndex);
       const result = traverse({ condition1: targetIndex }, 'at');
       return result;
-    } catch (error) {
-      console.error(error);
-    }
   }
   function pop() {
     try {
