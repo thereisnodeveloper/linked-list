@@ -1,6 +1,3 @@
-
-
-
 console.log('Linked List package loaded - test!!!');
 // eslint-disable-next-line no-unused-vars
 
@@ -13,9 +10,8 @@ function linkedList() {
   let tail;
   let size = 0;
 
-
   function checkIfSizeIs1(newNodeReference) {
-    if (getSize() === 0) {
+    if (size === 0) {
       head = newNodeReference;
       tail = newNodeReference;
       return true;
@@ -28,7 +24,7 @@ function linkedList() {
     mode = null,
     currentNode = head,
     currentIndex = 0,
-    resultString = '',
+    resultString = ''
   ) {
     // TODO: calculate big O for time & space
     // MAYBE: use loop instead
@@ -122,7 +118,7 @@ function linkedList() {
 
     checkIfSizeIs1(newNodeReference);
 
-    getTail().next = newNodeReference;
+    tail.next = newNodeReference;
 
     tail = newNodeReference;
     size++;
@@ -189,14 +185,17 @@ function linkedList() {
   }
 
   return {
-    get tail(){return tail},
-    get head(){return head},
-    get size(){return size},
+    get tail() {
+      return tail;
+    },
+    get head() {
+      return head;
+    },
+    get size() {
+      return size;
+    },
     append,
     prepend,
-    // getHead,
-    // getSize,
-    // getTail,
     at,
     pop,
     contains,
@@ -208,25 +207,63 @@ function linkedList() {
   };
 }
 
+function testLinkedList() {
+  console.log('Starting LinkedList Tests');
 
+  const list = linkedList();
+  // Test append
+  console.log('Testing append...');
+  list.append(1);
+  list.append(2);
+  list.append(3);
+  console.assert(list.size === 3, 'Size should be 3 after appending 3 elements');
+  console.assert(list.head.value === 1, 'Head should be 1');
+  console.assert(list.tail.value === 3, 'Tail should be 3');
 
+  // Test prepend
+  console.log('Testing prepend...');
+  list.prepend(0);
+  console.assert(list.size === 4, 'Size should be 4 after prepending');
+  console.assert(list.head.value === 0, 'Head should be 0 after prepending');
 
+  // Test at
+  console.log('Testing at...');
+  console.assert(list.at(0).value === 0, 'Element at index 0 should be 0');
+  console.assert(list.at(2).value === 2, 'Element at index 2 should be 2');
 
+  // Test pop
+  console.log('Testing pop...');
+  const popped = list.pop();
+  console.assert(popped.value === 3, 'Popped element should be 3');
+  console.assert(list.size === 3, 'Size should be 3 after popping');
+  console.assert(list.tail.value === 2, 'New tail should be 2');
 
+  // Test contains and find (if implemented)
+  if (list.contains && list.find) {
+    console.log('Testing contains and find...');
+    console.assert(list.contains(1) === true, 'List should contain 1');
+    console.assert(list.contains(5) === false, 'List should not contain 5');
+    console.assert(list.find(0) === 0, 'Index of 0 should be 0');
+    console.assert(list.find(2) === 2, 'Index of 2 should be 2');
+    console.assert(list.find(5) === null, 'find(5) should return null');
+  } else {
+    console.log('contains and find methods not implemented, skipping tests');
+  }
 
+  // Test toString (if implemented)
+  if (list.toString) {
+    console.log('Testing toString...');
+    console.log('List as string:', list.toString());
+    console.assert(typeof list.toString() === 'string', 'toString should return a string');
+  } else {
+    console.log('toString method not implemented, skipping test');
+  }
 
+  
+  console.log('LinkedList Tests Completed');
+}
 
+// Run the tests
+testLinkedList();
 
-
-
-
-
-
-
-
-
-
-
-
-
-export {  linkedList };
+export { linkedList };
