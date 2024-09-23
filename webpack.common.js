@@ -6,6 +6,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export default {
+  experiments: {
+    outputModule: true,
+  },
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html',
@@ -21,7 +24,6 @@ export default {
     globalObject: 'this',
     library: { name: 'LinkedListLibrary',
       type: 'module',
-
      },
 
   },
