@@ -6,10 +6,11 @@ console.log('Linked List package loaded - test!!!');
 
 // use Factory functions instead of clsasses
 function testFunc() {
-  console.log('test function......');
+  console.log('this is just a test function......');
 }
 
 function linkedList() {
+  console.log('linkedList() called...')
   // export default function linkedList() {
   let head;
   let tail;

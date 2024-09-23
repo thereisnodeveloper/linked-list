@@ -22,10 +22,8 @@ export default {
     path: path.resolve(__dirname, 'dist'),
     clean: true,
     globalObject: 'this',
-    library: { name: 'LinkedListLibrary',
-      type: 'module',
-     },
-
+    library: { 
+       type: 'module' },
   },
   module: {
     rules: [
