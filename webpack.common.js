@@ -20,8 +20,8 @@ export default {
     clean: true,
     globalObject: 'this',
     library: { name: 'LinkedListLibrary',
-      type: 'umd',
-      
+      type: 'module',
+
      },
 
   },
