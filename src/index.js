@@ -5,9 +5,6 @@ console.log('Linked List package loaded - test!!!');
 // eslint-disable-next-line no-unused-vars
 
 // use Factory functions instead of clsasses
-function testFunction() {
-  console.log('this is just a test function......');
-}
 
 function linkedList() {
   console.log('linkedList() called...');
@@ -232,4 +229,4 @@ function linkedList() {
 
 
 
-export { testFunction as testFunc, linkedList };
+export {  linkedList };
