@@ -1,5 +1,5 @@
-// import './reset.css';
-// import './style.css';
+
+
 
 console.log('Linked List package loaded - test!!!');
 // eslint-disable-next-line no-unused-vars
@@ -16,18 +16,6 @@ function linkedList() {
   let tail;
   let size = 0;
 
-  function getTail() {
-    // MAYBE: I could traverse instead of storing tail in memory
-    return tail;
-  }
-
-  function getSize() {
-    return size;
-  }
-
-  function getHead() {
-    return head;
-  }
 
   function checkIfSizeIs1(newNodeReference) {
     if (getSize() === 0) {
@@ -175,21 +163,21 @@ function linkedList() {
   }
 
   function removeAt(index) {
-      isIndexValid(index);
-      if (index === 0) {
-        aList.pop;
-        return;
-      }
+    isIndexValid(index);
+    if (index === 0) {
+      aList.pop;
+      return;
+    }
 
-      const nodeBeforeTarget = traverse({ condition1: index - 1 }, 'removeAt');
-      const removalTarget = { ...nodeBeforeTarget.next };
-      nodeBeforeTarget.next = nodeBeforeTarget.next.next;
-      if (index === size - 1) {
-        tail = nodeBeforeTarget;
-        console.log('NEW tail:', tail);
-      }
-      size -= 1;
-      return removalTarget;
+    const nodeBeforeTarget = traverse({ condition1: index - 1 }, 'removeAt');
+    const removalTarget = { ...nodeBeforeTarget.next };
+    nodeBeforeTarget.next = nodeBeforeTarget.next.next;
+    if (index === size - 1) {
+      tail = nodeBeforeTarget;
+      console.log('NEW tail:', tail);
+    }
+    size -= 1;
+    return removalTarget;
   }
 
   function isIndexValid(targetIndex) {
@@ -204,11 +192,14 @@ function linkedList() {
   }
 
   return {
+    get tail(){return tail},
+    get head(){return head},
+    get size(){return size},
     append,
     prepend,
-    getHead,
-    getSize,
-    getTail,
+    // getHead,
+    // getSize,
+    // getTail,
     at,
     pop,
     contains,
@@ -220,25 +211,25 @@ function linkedList() {
   };
 }
 
-// const aList = linkedList();
-// aList.append(2);
-// aList.append(5);
-// aList.append(4);
-// aList.prepend(10);
-// aList.prepend(7);
-// aList.prepend(8);
 
-// const at = aList.at(4);
 
-// const contains = aList.contains(8);
-// const find = aList.find(1000);
 
-// const toString = aList.toString();
-// console.log('toString:', toString);
 
-// const [head, tail, size] = [aList.getHead(), aList.getTail(), aList.getSize()];
-// console.log('head:', head);
-// console.log('tail:', tail);
-// console.log('size:', size);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 export { testFunction as testFunc, linkedList };
