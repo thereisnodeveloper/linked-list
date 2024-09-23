@@ -9,8 +9,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "webpack --watch",
-    "start": "nodemon --watch webpack.common.cjs --watch webpack.dev.cjs --watch webpack.prod.cjs --exec \"webpack-dev-server --open --config webpack.dev.cjs\"",
-    "build": "webpack --config webpack.prod.cjs",
+    "start": "nodemon --watch webpack.common.js --watch webpack.dev.js --watch webpack.prod.js --exec \"webpack-dev-server --open --config webpack.dev.js\"",
+    "build": "webpack --config webpack.prod.js",
     "prepublishOnly": "npm run build"
   },
   "keywords": [],
