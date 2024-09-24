@@ -108,16 +108,16 @@ function linkedList() {
   function at(targetIndex) {
     isIndexValid(targetIndex);
     // function atCallback() {}
-    const result = traverse({evaluator: createEvaluator(targetIndex), caller : at});
+    const result = traverse({ evaluator: createEvaluator(targetIndex), caller: at });
     return result;
   }
   function pop() {
     if (size <= 0) throw new Error('Cannot pop, size is 0');
-    function popCallback() {}
+    // function popCallback() {}
     const last = { ...tail };
 
     tail.value = null;
-    const secondToLast = traverse({ condition1: size - 2 }, 'pop'); // find 2nd to the last element
+    const secondToLast = traverse({ evaluator: createEvaluator(size - 2), caller: pop }); // find 2nd to the last element
     secondToLast.next = null;
     // set new tail value
     tail = secondToLast;
@@ -276,11 +276,11 @@ function testLinkedList() {
   console.assert(list.at(2).value === 2, 'Element at index 2 should be 2');
 
   // Test pop
-  // console.log('Testing pop...');
-  // const popped = list.pop();
-  // console.assert(popped.value === 3, 'Popped element should be 3');
-  // console.assert(list.size === 3, 'Size should be 3 after popping');
-  // console.assert(list.tail.value === 2, 'New tail should be 2');
+  console.log('Testing pop...');
+  const popped = list.pop();
+  console.assert(popped.value === 3, 'Popped element should be 3');
+  console.assert(list.size === 3, 'Size should be 3 after popping');
+  console.assert(list.tail.value === 2, 'New tail should be 2');
 
   // Test contains and find (if implemented)
   // if (list.contains && list.find) {
