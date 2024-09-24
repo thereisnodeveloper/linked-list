@@ -18,7 +18,8 @@ function linkedList() {
     }
     return false;
   }
-
+  /** @type {{evaluator: Function, callback: Function, currentNode: Symbol,
+   * currentIndex: Number, resultString: String, caller: Function }} */
   function traverse(config) {
     let {
       evaluator,
@@ -44,7 +45,7 @@ function linkedList() {
       [insertAt]: { targetProperty: currentIndex, callbackOptions: {} },
       [removeAt]: { targetProperty: currentIndex, callbackOptions: {} },
     };
-  
+
     // console.log('caller:', caller)
     // console.log('methodSpecificComparisonValue[caller]:', methodSpecificComparisonValue[caller])
 
@@ -106,8 +107,8 @@ function linkedList() {
 
   function at(targetIndex) {
     isIndexValid(targetIndex);
-    function atCallback() {}
-    const result = traverse({ condition1: targetIndex }, 'at');
+    // function atCallback() {}
+    const result = traverse({evaluator: createEvaluator(targetIndex), caller : at});
     return result;
   }
   function pop() {
@@ -145,9 +146,6 @@ function linkedList() {
       console.log('starting toStringCallback');
       return `${resultString}( ${currentNode.value} ) -> ` + ' null';
     }
-
-    //! !! needs to be bound just condition 1 (targetProperty), and have
-    //! condition 2 (desiredValue) set later inside `traverse()`
 
     return traverse({
       evaluator: createEvaluator(size - 1),
@@ -273,9 +271,9 @@ function testLinkedList() {
   console.assert(list.head.value === 0, 'Head should be 0 after prepending');
 
   // Test at
-  // console.log('Testing at...');
-  // console.assert(list.at(0).value === 0, 'Element at index 0 should be 0');
-  // console.assert(list.at(2).value === 2, 'Element at index 2 should be 2');
+  console.log('Testing at...');
+  console.assert(list.at(0).value === 0, 'Element at index 0 should be 0');
+  console.assert(list.at(2).value === 2, 'Element at index 2 should be 2');
 
   // Test pop
   // console.log('Testing pop...');
@@ -297,13 +295,15 @@ function testLinkedList() {
   // }
 
   // Test toString (if implemented)
-  if (list.toString) {
-    console.log('Testing toString...');
-    console.log('List as string:', list.toString());
-    console.assert(typeof list.toString() === 'string', 'toString should return a string');
-  } else {
-    console.log('toString method not implemented, skipping test');
-  }
+  // console.log('List as string:', list.toString());
+
+  // if (list.toString) {
+  //   console.log('Testing toString...');
+  //   console.log('List as string:', list.toString());
+  //   console.assert(typeof list.toString() === 'string', 'toString should return a string');
+  // } else {
+  //   console.log('toString method not implemented, skipping test');
+  // }
 
   console.log('LinkedList Tests Completed');
 }
@@ -330,8 +330,8 @@ function testLinkedList() {
 function createEvaluator(targetProperty) {
   // const { targetProperty, propertyValue } = config;
   return function evaluator(propertyValue) {
-    console.log('targetProperty:', targetProperty);
-    console.log('propertyValue:', propertyValue);
+    // console.log('targetProperty:', targetProperty);
+    // console.log('propertyValue:', propertyValue);
     return targetProperty === propertyValue;
   };
   // ??? need to know if I can bind more arguments when I call it within traverse()
