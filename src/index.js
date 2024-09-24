@@ -37,22 +37,22 @@ function linkedList() {
     const currentValue = currentNode.value;
 
     const methodSpecificConfigs = {
-      [contains]: { targetProperty: currentValue, callbackOptions: {} },
-      [find]: { targetProperty: currentValue, callbackOptions: {} },
-      [at]: { targetProperty: currentIndex, callbackOptions: {} },
-      [pop]: { targetProperty: currentIndex, callbackOptions: {} },
-      [toString]: { targetProperty: currentIndex, callbackOptions: { resultString, currentNode } },
-      [insertAt]: { targetProperty: currentIndex, callbackOptions: {} },
-      [removeAt]: { targetProperty: currentIndex, callbackOptions: {} },
+      [contains]: { propertyValue: currentValue, callbackOptions: {} },
+      [find]: { propertyValue: currentValue, callbackOptions: currentIndex },
+      [at]: { propertyValue: currentIndex, callbackOptions: {} },
+      [pop]: { propertyValue: currentIndex, callbackOptions: {} },
+      [toString]: { propertyValue: currentIndex, callbackOptions: { resultString, currentNode } },
+      [insertAt]: { propertyValue: currentIndex, callbackOptions: {} },
+      [removeAt]: { propertyValue: currentIndex, callbackOptions: {} },
     };
 
     // console.log('caller:', caller)
-    // console.log('methodSpecificComparisonValue[caller]:', methodSpecificComparisonValue[caller])
-
     // Defines the 'propertyValue' which is the threshold value for 'targetProperty'. The condition will be true when this value is reached or exceeded.
     // stopConditionMet = evaluateCondition(conditionObject, callback,
     // currentIndex, currentValue);
-    stopConditionMet = evaluator(methodSpecificConfigs[caller].targetProperty);
+    // console.log('methodSpecificConfigs[caller].propertyValue:', methodSpecificConfigs[caller].propertyValue)
+    
+    stopConditionMet = evaluator(methodSpecificConfigs[caller].propertyValue);
     // BASE CASE
     if (stopConditionMet) {
       console.log(`stop condition ${stopConditionMet} met`);
@@ -78,32 +78,32 @@ function linkedList() {
     });
   }
 
-  function evaluateCondition(conditionObject, callback, currentIndex, currentValue) {
-    // MAYBE: instead of using mode, assign "this" to static variable (which poiints to the caller function)
-    let { condition1, condition2 } = conditionObject;
-    let meetsCondition = false;
+  // function evaluateCondition(conditionObject, callback, currentIndex, currentValue) {
+  //   // MAYBE: instead of using mode, assign "this" to static variable (which poiints to the caller function)
+  //   let { condition1, condition2 } = conditionObject;
+  //   let meetsCondition = false;
 
-    switch (callback) {
-      case 'at':
-      case 'pop':
-      case toStringCallback:
-      case 'insertAt':
-      case 'removeAt': {
-        condition2 = currentIndex;
-        break;
-      }
-      case 'contains':
-      case findCallback: {
-        condition2 = currentValue;
-        break;
-      }
+  //   switch (callback) {
+  //     case 'at':
+  //     case 'pop':
+  //     case toStringCallback:
+  //     case 'insertAt':
+  //     case 'removeAt': {
+  //       condition2 = currentIndex;
+  //       break;
+  //     }
+  //     case 'contains':
+  //     case findCallback: {
+  //       condition2 = currentValue;
+  //       break;
+  //     }
 
-      default:
-    }
-    meetsCondition = condition1 === condition2;
+  //     default:
+  //   }
+  //   meetsCondition = condition1 === condition2;
 
-    return meetsCondition;
-  }
+  //   return meetsCondition;
+  // }
 
   function at(targetIndex) {
     isIndexValid(targetIndex);
@@ -126,17 +126,18 @@ function linkedList() {
     return last;
   }
   function contains(targetValue) {
-    function containsCallback() {}
-    const currentNode = traverse({ condition1: targetValue }, 'contains');
+    // function containsCallback() {}
+    const currentNode = traverse({ evaluator: createEvaluator(targetValue), caller: contains });
 
     return currentNode.value === targetValue;
   }
 
   function find(targetValue) {
-    function findCallback() {
+    function findCallback(currentIndex) {
+      
       return currentIndex;
     }
-    const index = traverse({ condition1: targetValue }, findCallback);
+    const index = traverse({  evaluator: createEvaluator(targetValue), caller: find, callback: findCallback });
     return Number.isInteger(index) ? index : null; // traverse will return currentNode (tail) if nothing is found. If found, it will return an index,
   }
 
@@ -283,16 +284,16 @@ function testLinkedList() {
   console.assert(list.tail.value === 2, 'New tail should be 2');
 
   // Test contains and find (if implemented)
-  // if (list.contains && list.find) {
-  //   console.log('Testing contains and find...');
-  //   console.assert(list.contains(1) === true, 'List should contain 1');
-  //   console.assert(list.contains(5) === false, 'List should not contain 5');
-  //   console.assert(list.find(0) === 0, 'Index of 0 should be 0');
-  //   console.assert(list.find(2) === 2, 'Index of 2 should be 2');
-  //   console.assert(list.find(5) === null, 'find(5) should return null');
-  // } else {
-  //   console.log('contains and find methods not implemented, skipping tests');
-  // }
+  if (list.contains && list.find) {
+    console.log('Testing contains and find...');
+    console.assert(list.contains(1) === true, 'List should contain 1');
+    console.assert(list.contains(5) === false, 'List should not contain 5');
+    console.assert(list.find(0) === 0, 'Index of 0 should be 0');
+    console.assert(list.find(2) === 2, 'Index of 2 should be 2');
+    console.assert(list.find(5) === null, 'find(5) should return null');
+  } else {
+    console.log('contains and find methods not implemented, skipping tests');
+  }
 
   // Test toString (if implemented)
   // console.log('List as string:', list.toString());
