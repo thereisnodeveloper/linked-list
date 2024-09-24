@@ -5,12 +5,11 @@ console.log('Linked List package loaded - test!!!');
 
 function linkedList() {
   console.log('linkedList() called...');
-  // export default function linkedList() {
   let head;
   let tail;
   let size = 0;
 
-  function checkIfSizeIs1(newNodeReference) {
+  function setHeadTailIfSize0(newNodeReference) {
     if (size === 0) {
       head = newNodeReference;
       tail = newNodeReference;
@@ -29,7 +28,6 @@ function linkedList() {
       resultString = '',
       caller = null,
     } = config;
-    // console.log('config:', config);
 
     // TODO: calculate big O for time & space
     // MAYBE: use loop instead
@@ -46,12 +44,9 @@ function linkedList() {
       [removeAt]: { propertyValue: currentIndex, callbackOptions: {} },
     };
 
-    // console.log('caller:', caller)
-    // Defines the 'propertyValue' which is the threshold value for 'targetProperty'. The condition will be true when this value is reached or exceeded.
-    // stopConditionMet = evaluateCondition(conditionObject, callback,
-    // currentIndex, currentValue);
-    // console.log('methodSpecificConfigs[caller].propertyValue:', methodSpecificConfigs[caller].propertyValue)
-    
+    // Defines the 'propertyValue' which is the threshold value for
+    // 'targetProperty'. The condition will be true when this value is reached
+    // or exceeded.
     stopConditionMet = evaluator(methodSpecificConfigs[caller].propertyValue);
     // BASE CASE
     if (stopConditionMet) {
@@ -78,42 +73,14 @@ function linkedList() {
     });
   }
 
-  // function evaluateCondition(conditionObject, callback, currentIndex, currentValue) {
-  //   // MAYBE: instead of using mode, assign "this" to static variable (which poiints to the caller function)
-  //   let { condition1, condition2 } = conditionObject;
-  //   let meetsCondition = false;
-
-  //   switch (callback) {
-  //     case 'at':
-  //     case 'pop':
-  //     case toStringCallback:
-  //     case 'insertAt':
-  //     case 'removeAt': {
-  //       condition2 = currentIndex;
-  //       break;
-  //     }
-  //     case 'contains':
-  //     case findCallback: {
-  //       condition2 = currentValue;
-  //       break;
-  //     }
-
-  //     default:
-  //   }
-  //   meetsCondition = condition1 === condition2;
-
-  //   return meetsCondition;
-  // }
-
   function at(targetIndex) {
     isIndexValid(targetIndex);
-    // function atCallback() {}
+
     const result = traverse({ evaluator: createEvaluator(targetIndex), caller: at });
     return result;
   }
   function pop() {
     if (size <= 0) throw new Error('Cannot pop, size is 0');
-    // function popCallback() {}
     const last = { ...tail };
 
     tail.value = null;
@@ -134,10 +101,13 @@ function linkedList() {
 
   function find(targetValue) {
     function findCallback(currentIndex) {
-      
       return currentIndex;
     }
-    const index = traverse({  evaluator: createEvaluator(targetValue), caller: find, callback: findCallback });
+    const index = traverse({
+      evaluator: createEvaluator(targetValue),
+      caller: find,
+      callback: findCallback,
+    });
     return Number.isInteger(index) ? index : null; // traverse will return currentNode (tail) if nothing is found. If found, it will return an index,
   }
 
@@ -160,7 +130,7 @@ function linkedList() {
   function append(targetValue) {
     const newNodeReference = node(targetValue);
 
-    checkIfSizeIs1(newNodeReference);
+    setHeadTailIfSize0(newNodeReference);
 
     tail.next = newNodeReference;
 
@@ -173,7 +143,7 @@ function linkedList() {
   function prepend(targetValue) {
     const newNodeReference = node(targetValue, head);
 
-    checkIfSizeIs1(newNodeReference);
+    setHeadTailIfSize0(newNodeReference);
 
     head = newNodeReference;
     size++;
@@ -296,15 +266,15 @@ function testLinkedList() {
   }
 
   // Test toString (if implemented)
-  // console.log('List as string:', list.toString());
+  console.log('List as string:', list.toString());
 
-  // if (list.toString) {
-  //   console.log('Testing toString...');
-  //   console.log('List as string:', list.toString());
-  //   console.assert(typeof list.toString() === 'string', 'toString should return a string');
-  // } else {
-  //   console.log('toString method not implemented, skipping test');
-  // }
+  if (list.toString) {
+    console.log('Testing toString...');
+    console.log('List as string:', list.toString());
+    console.assert(typeof list.toString() === 'string', 'toString should return a string');
+  } else {
+    console.log('toString method not implemented, skipping test');
+  }
 
   console.log('LinkedList Tests Completed');
 }
@@ -329,14 +299,9 @@ function testLinkedList() {
  */
 
 function createEvaluator(targetProperty) {
-  // const { targetProperty, propertyValue } = config;
   return function evaluator(propertyValue) {
-    // console.log('targetProperty:', targetProperty);
-    // console.log('propertyValue:', propertyValue);
     return targetProperty === propertyValue;
   };
-  // ??? need to know if I can bind more arguments when I call it within traverse()
-  // return evaluator.bind(null, { targetProperty });
 }
 
 // Run the tests
